@@ -1,7 +1,7 @@
 FROM continuumio/miniconda:4.7.12
 
 RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-RUN bash Miniconda3-latest-Linux-x86_64.sh && source ~/.bashrc
+RUN bash Miniconda3-latest-Linux-x86_64.sh
 
 RUN conda create -n azureml python=3.10 -y && conda activate azureml
 
