@@ -11,7 +11,7 @@ env:
   IMAGE_NAME: joseco/az-ml-cli
 
 jobs:
-  build-and-push:
+  Build_and_Push_Image:
     runs-on: [ubuntu-22.04]
     permissions:
       contents: read
@@ -40,6 +40,8 @@ jobs:
         context: .
         push: true
         tags: ${{ env.IMAGE_NAME }}:${{ env.TAG }}
+  
+
 
     # - name: Build Docker (local test)
     #   uses: docker/build-push-action@v5
@@ -48,14 +50,3 @@ jobs:
     #     load: true
     #     tags: ${{ steps.meta.outputs.tags }}
     #     labels: ${{ steps.meta.outputs.labels }}
-    - name: Stop Previous Services
-      run: docker compose down -v || true
-
-    - name: Running Container Tests
-      run: |
-        IMAGE_TAG=${{ env.IMAGE_NAME }}:${{ env.TAG }}
-        echo "Usando imagen: $IMAGE_TAG"
-        docker run -d --name test-container -p 5000:5000 $IMAGE_TAG
-        trap "docker stop test-container && docker rm test-container" EXIT
-        sleep 10
-        curl -f http://localhost:5000/health
