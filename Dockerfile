@@ -1,6 +1,10 @@
 FROM continuumio/miniconda:4.7.12
 
-RUN apt install -y curl
+RUN sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list && \
+    sed -i 's|security.debian.org|archive.debian.org/|g' /etc/apt/sources.list && \
+    apt-get -o Acquire::Check-Valid-Until=false update && \
+    apt-get install -y curl && \
+    rm -rf /var/lib/apt/lists/*
 
 # Actualizar conda y crear el entorno
 RUN conda update -n base -c defaults conda -y && \
