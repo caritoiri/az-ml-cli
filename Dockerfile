@@ -1,5 +1,7 @@
 FROM continuumio/miniconda:4.7.12
 
+RUN apt install -y curl
+
 # Actualizar conda y crear el entorno
 RUN conda update -n base -c defaults conda -y && \
     conda create -n azureml python=3.10 -y
